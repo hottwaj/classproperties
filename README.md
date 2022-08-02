@@ -4,6 +4,14 @@ Decorators for classproperty and cached_classproperty
 
 Python 3 compatible only.  No dependencies.
 
+## Installation
+
+This package is not hosted on pypi but can be installed using pip using e.g.
+
+```bash
+pip install git+https://github.com/hottwaj/classproperties.git
+```
+
 ## Example usage
 
 ```
