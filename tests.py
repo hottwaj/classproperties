@@ -1,6 +1,7 @@
 import unittest
 from classproperties import *
 
+
 def get_cls_definition():
     class Cls(object):
 
@@ -17,7 +18,7 @@ def get_cls_definition():
     return Cls
 
 
-class TestWaterfall(unittest.TestCase):
+class TestClassProperty(unittest.TestCase):
     """This class contains all tests of the library"""
       
     def test_classproperty(self):
@@ -28,6 +29,8 @@ class TestWaterfall(unittest.TestCase):
         Cls = get_cls_definition()
         self.assertEqual(Cls().prop, 1000)
 
+
+class TestCachedClassProperty(unittest.TestCase):
     def test_cached_classproperty(self):
         Cls = get_cls_definition()
         self.assertEqual(Cls.cached_prop_exec_count, 0)
@@ -42,12 +45,35 @@ class TestWaterfall(unittest.TestCase):
         self.assertEqual(Cls.cached_prop, 2000)
         self.assertEqual(Cls.cached_prop_exec_count, 1)
 
+    def test_cached_classproperty_delete_cache(self):
+        Cls = get_cls_definition()
+        self.assertEqual(Cls.cached_prop_exec_count, 0)
+        self.assertEqual(Cls.cached_prop, 2000)
+        self.assertEqual(Cls.cached_prop_exec_count, 1)
+        cached_classproperty.remove_cached_value(Cls, 'cached_prop')
+        self.assertEqual(Cls.cached_prop, 2000)
+        self.assertEqual(Cls.cached_prop_exec_count, 2)
+
     def test_cached_classproperty_instance(self):
         Cls = get_cls_definition()
         inst = Cls()
         self.assertEqual(inst.cached_prop_exec_count, 0)
         self.assertEqual(inst.cached_prop, 2000)
         self.assertEqual(inst.cached_prop_exec_count, 1)
+
+    def test_cached_classproperty_instance_with_deletion(self):
+        Cls = get_cls_definition()
+        inst = Cls()
+        self.assertEqual(inst.cached_prop_exec_count, 0)
+        self.assertEqual(inst.cached_prop, 2000)
+
+        inst.cached_prop = 3000
+        self.assertEqual(Cls.cached_prop, 2000)
+        self.assertEqual(inst.cached_prop, 3000)
+
+        del inst.cached_prop
+        self.assertEqual(Cls.cached_prop, 2000)
+        self.assertEqual(Cls.cached_prop_exec_count, 1)
 
     def test_cached_classproperty_executed_once_instance(self):
         Cls = get_cls_definition()
@@ -75,6 +101,7 @@ class TestWaterfall(unittest.TestCase):
         self.assertEqual(inst.cached_prop_exec_count, 1)
         self.assertEqual(inst.cached_prop, 2000)
         self.assertEqual(inst.cached_prop_exec_count, 1)
+
 
 if __name__ == '__main__':
     unittest.main()
