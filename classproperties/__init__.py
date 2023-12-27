@@ -1,14 +1,20 @@
+from typing import TypeVar, Generic
 from functools import cached_property
 
+T: TypeVar = TypeVar('T')
 
-class classproperty(property):
+
+class classproperty(property, Generic[T]):
     """
     Decorator for a Class-level property.
 
     Credit to Denis Rhyzhkov on Stackoverflow: https://stackoverflow.com/a/13624858/1280629
     """
+    
+    def __init__(self, func: Callable[[type[Any]], T]) -> None:
+        super().__init__(func)
 
-    def __get__(self, owner_self, owner_cls):
+    def __get__(self, instance: Any | None, owner: type[Any]) -> T:
         return self.fget(owner_cls)
 
 
