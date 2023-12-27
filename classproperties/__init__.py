@@ -1,7 +1,7 @@
-from typing import TypeVar, Generic
+from typing import Any, Callable, Generic, TypeVar
 from functools import cached_property
 
-T: TypeVar = TypeVar('T')
+T = TypeVar('T')
 
 
 class classproperty(property, Generic[T]):
@@ -11,10 +11,10 @@ class classproperty(property, Generic[T]):
     Credit to Denis Rhyzhkov on Stackoverflow: https://stackoverflow.com/a/13624858/1280629
     """
     
-    def __init__(self, func: Callable[[type[Any]], T]) -> None:
+    def __init__(self, func: Callable[[type], T]) -> None:
         super().__init__(func)
 
-    def __get__(self, owner_self: Any | None, owner_cls: type[Any]) -> T:
+    def __get__(self, owner_self: Any, owner_cls: type | None = None) -> T:
         return self.fget(owner_cls)
 
 
