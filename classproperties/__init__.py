@@ -14,7 +14,7 @@ class classproperty(property, Generic[T]):
     def __init__(self, func: Callable[[type[Any]], T]) -> None:
         super().__init__(func)
 
-    def __get__(self, instance: Any | None, owner: type[Any]) -> T:
+    def __get__(self, owner_self: Any | None, owner_cls: type[Any]) -> T:
         return self.fget(owner_cls)
 
 
