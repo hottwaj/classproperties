@@ -9,9 +9,9 @@ with open(path.join(here, 'README.md')) as f:
 setup(
     name='classproperties',
 
-    version='0.1',
+    version='0.2',
     
-    python_requires='>3.0',
+    python_requires='>3.5',
 
     description='Decorators for classproperty and cached_classproperty',
     long_description=long_description,
@@ -24,6 +24,7 @@ setup(
     license='MIT, Copyright 2021',
 
     classifiers=[
+        'Typing :: Typed'
     ],
 
     keywords='',
