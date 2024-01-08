@@ -11,7 +11,7 @@ setup(
 
     version='0.2',
     
-    python_requires='>3.5',
+    python_requires='>=3.5',
 
     description='Decorators for classproperty and cached_classproperty',
     long_description=long_description,
